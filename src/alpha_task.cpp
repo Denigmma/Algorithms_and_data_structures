@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <bitset>
 
 template<typename B>
 class ones_compl_int {
@@ -19,6 +20,18 @@ public:
     // Оператор вычитания
     ones_compl_int operator-(const ones_compl_int& other) const {
         return ones_compl_int(subtractBinary(value, other.value));
+    }
+
+    // Оператор умножения
+    ones_compl_int operator*(const ones_compl_int& other) const {
+        // Простое умножение двоичных чисел
+        return ones_compl_int(multiplyBinary(value, other.value));
+    }
+
+    // Оператор деления
+    ones_compl_int operator/(const ones_compl_int& other) const {
+        // Простое деление двоичных чисел
+        return ones_compl_int(divideBinary(value, other.value));
     }
 
     // Оператор сравнения на равенство
@@ -56,6 +69,48 @@ private:
         std::reverse(result.begin(), result.end());
         return result;
     }
+
+    // Вспомогательная функция для выполнения умножения двоичных чисел
+    B multiplyBinary(const B& a, const B& b) const {
+        // Преобразуем строки в целые числа в двоичной системе
+        std::bitset<sizeof(B)> num1(a);
+        std::bitset<sizeof(B)> num2(b);
+
+        // Выполняем умножение
+        std::bitset<sizeof(B) * 8> result = num1.to_ulong() * num2.to_ulong();
+
+        // Преобразуем результат обратно в строку в двоичном представлении
+        std::string resultStr = result.to_string();
+
+        // Удаляем ведущие нули
+        resultStr.erase(0, resultStr.find('1'));
+
+        return resultStr;
+    }
+
+    // Вспомогательная функция для выполнения деления двоичных чисел
+    B divideBinary(const B& a, const B& b) const {
+        // Преобразуем строки в целые числа в двоичной системе
+        std::bitset<sizeof(B) * 8> num1(a);
+        std::bitset<sizeof(B) * 8> num2(b);
+
+        // Проверяем деление на ноль
+        if (num2.to_ulong() == 0) {
+            throw std::invalid_argument("Деление на ноль!");
+        }
+
+        // Выполняем деление
+        std::bitset<sizeof(B) * 8> result = num1.to_ulong() / num2.to_ulong();
+
+        // Преобразуем результат обратно в строку в двоичном представлении
+        std::string resultStr = result.to_string();
+
+        // Удаляем ведущие нули
+        resultStr.erase(0, resultStr.find('1'));
+
+        return resultStr;
+    }
+
 
     // Вспомогательная функция для выполнения вычитания двоичных чисел
     B subtractBinary(const B& a, const B& b) const {
@@ -96,9 +151,13 @@ int main() {
 
     ones_compl_int<std::string> sum = num1 + num2;
     ones_compl_int<std::string> diff = num1 - num2;
+    ones_compl_int<std::string> product = num1 * num2;
+    ones_compl_int<std::string> quotient = num1 / num2;
 
     std::cout << "Сумма: " << sum << std::endl;
     std::cout << "Разность: " << diff << std::endl;
+    std::cout << "Произведение: " << product << std::endl;
+    std::cout << "Частное: " << quotient << std::endl;
 
     return 0;
 }
