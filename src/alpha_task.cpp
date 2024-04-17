@@ -58,7 +58,7 @@ private:
     B addBinary(const B& a, const B& b) const {
         B result;
         int carry = 0;
-        for (int i = a.size() - 1; i >= 0; i--) {
+        for (int i = a.size() - 1; i >= 0; i--) { // size_t גלוסעמ int
             int sum = (a[i] - '0') + (b[i] - '0') + carry;
             result.push_back(sum % 2 + '0');
             carry = sum / 2;
