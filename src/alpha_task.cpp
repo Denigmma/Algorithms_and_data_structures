@@ -1,4 +1,4 @@
-#include <iostream>
+п»ї#include <iostream>
 #include <string>
 #include <algorithm>
 #include <bitset>
@@ -6,59 +6,59 @@
 template<typename B>
 class ones_compl_int {
 private:
-    B value;  // Число хранится в виде строки в двоичном представлении
+    B value;  // Р§РёСЃР»Рѕ С…СЂР°РЅРёС‚СЃСЏ РІ РІРёРґРµ СЃС‚СЂРѕРєРё РІ РґРІРѕРёС‡РЅРѕРј РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРё
 
 public:
-    // Конструктор
+    // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
     ones_compl_int(const B& val = "0") : value(val) {}
 
-    // Оператор сложения
+    // РћРїРµСЂР°С‚РѕСЂ СЃР»РѕР¶РµРЅРёСЏ
     ones_compl_int operator+(const ones_compl_int& other) const {
         return ones_compl_int(addBinary(value, other.value));
     }
 
-    // Оператор вычитания
+    // РћРїРµСЂР°С‚РѕСЂ РІС‹С‡РёС‚Р°РЅРёСЏ
     ones_compl_int operator-(const ones_compl_int& other) const {
         return ones_compl_int(subtractBinary(value, other.value));
     }
 
-    // Оператор умножения
+    // РћРїРµСЂР°С‚РѕСЂ СѓРјРЅРѕР¶РµРЅРёСЏ
     ones_compl_int operator*(const ones_compl_int& other) const {
-        // Простое умножение двоичных чисел
+        // РџСЂРѕСЃС‚РѕРµ СѓРјРЅРѕР¶РµРЅРёРµ РґРІРѕРёС‡РЅС‹С… С‡РёСЃРµР»
         return ones_compl_int(multiplyBinary(value, other.value));
     }
 
-    // Оператор деления
+    // РћРїРµСЂР°С‚РѕСЂ РґРµР»РµРЅРёСЏ
     ones_compl_int operator/(const ones_compl_int& other) const {
-        // Простое деление двоичных чисел
+        // РџСЂРѕСЃС‚РѕРµ РґРµР»РµРЅРёРµ РґРІРѕРёС‡РЅС‹С… С‡РёСЃРµР»
         return ones_compl_int(divideBinary(value, other.value));
     }
 
-    // Оператор сравнения на равенство
+    // РћРїРµСЂР°С‚РѕСЂ СЃСЂР°РІРЅРµРЅРёСЏ РЅР° СЂР°РІРµРЅСЃС‚РІРѕ
     bool operator==(const ones_compl_int& other) const {
         return value == other.value;
     }
 
-    // Оператор вывода в поток
+    // РћРїРµСЂР°С‚РѕСЂ РІС‹РІРѕРґР° РІ РїРѕС‚РѕРє
     friend std::ostream& operator<<(std::ostream& os, const ones_compl_int& num) {
         os << num.value;
         return os;
     }
 
-    // Оператор ввода из потока
+    // РћРїРµСЂР°С‚РѕСЂ РІРІРѕРґР° РёР· РїРѕС‚РѕРєР°
     friend std::istream& operator>>(std::istream& is, ones_compl_int& num) {
         B input;
         is >> input;
-        num.value = input;  // Просто считываем строку
+        num.value = input;  // РџСЂРѕСЃС‚Рѕ СЃС‡РёС‚С‹РІР°РµРј СЃС‚СЂРѕРєСѓ
         return is;
     }
 
 private:
-    // Вспомогательная функция для выполнения сложения двоичных чисел
+    // Р’СЃРїРѕРјРѕРіР°С‚РµР»СЊРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ СЃР»РѕР¶РµРЅРёСЏ РґРІРѕРёС‡РЅС‹С… С‡РёСЃРµР»
     B addBinary(const B& a, const B& b) const {
         B result;
         int carry = 0;
-        for (int i = a.size() - 1; i >= 0; i--) { // size_t вместо int
+        for (int i = a.size() - 1; i >= 0; i--) { // size_t РІРјРµСЃС‚Рѕ int
             int sum = (a[i] - '0') + (b[i] - '0') + carry;
             result.push_back(sum % 2 + '0');
             carry = sum / 2;
@@ -70,57 +70,57 @@ private:
         return result;
     }
 
-    // Вспомогательная функция для выполнения умножения двоичных чисел
+    // Р’СЃРїРѕРјРѕРіР°С‚РµР»СЊРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ СѓРјРЅРѕР¶РµРЅРёСЏ РґРІРѕРёС‡РЅС‹С… С‡РёСЃРµР»
     B multiplyBinary(const B& a, const B& b) const {
-        // Преобразуем строки в целые числа в двоичной системе
+        // РџСЂРµРѕР±СЂР°Р·СѓРµРј СЃС‚СЂРѕРєРё РІ С†РµР»С‹Рµ С‡РёСЃР»Р° РІ РґРІРѕРёС‡РЅРѕР№ СЃРёСЃС‚РµРјРµ
         std::bitset<sizeof(B)> num1(a);
         std::bitset<sizeof(B)> num2(b);
 
-        // Выполняем умножение
+        // Р’С‹РїРѕР»РЅСЏРµРј СѓРјРЅРѕР¶РµРЅРёРµ
         std::bitset<sizeof(B) * 8> result = num1.to_ulong() * num2.to_ulong();
 
-        // Преобразуем результат обратно в строку в двоичном представлении
+        // РџСЂРµРѕР±СЂР°Р·СѓРµРј СЂРµР·СѓР»СЊС‚Р°С‚ РѕР±СЂР°С‚РЅРѕ РІ СЃС‚СЂРѕРєСѓ РІ РґРІРѕРёС‡РЅРѕРј РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРё
         std::string resultStr = result.to_string();
 
-        // Удаляем ведущие нули
+        // РЈРґР°Р»СЏРµРј РІРµРґСѓС‰РёРµ РЅСѓР»Рё
         resultStr.erase(0, resultStr.find('1'));
 
         return resultStr;
     }
 
-    // Вспомогательная функция для выполнения деления двоичных чисел
+    // Р’СЃРїРѕРјРѕРіР°С‚РµР»СЊРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґРµР»РµРЅРёСЏ РґРІРѕРёС‡РЅС‹С… С‡РёСЃРµР»
     B divideBinary(const B& a, const B& b) const {
-        // Преобразуем строки в целые числа в двоичной системе
+        // РџСЂРµРѕР±СЂР°Р·СѓРµРј СЃС‚СЂРѕРєРё РІ С†РµР»С‹Рµ С‡РёСЃР»Р° РІ РґРІРѕРёС‡РЅРѕР№ СЃРёСЃС‚РµРјРµ
         std::bitset<sizeof(B) * 8> num1(a);
         std::bitset<sizeof(B) * 8> num2(b);
 
-        // Проверяем деление на ноль
+        // РџСЂРѕРІРµСЂСЏРµРј РґРµР»РµРЅРёРµ РЅР° РЅРѕР»СЊ
         if (num2.to_ulong() == 0) {
-            throw std::invalid_argument("Деление на ноль!");
+            throw std::invalid_argument("Р”РµР»РµРЅРёРµ РЅР° РЅРѕР»СЊ!");
         }
 
-        // Выполняем деление
+        // Р’С‹РїРѕР»РЅСЏРµРј РґРµР»РµРЅРёРµ
         std::bitset<sizeof(B) * 8> result = num1.to_ulong() / num2.to_ulong();
 
-        // Преобразуем результат обратно в строку в двоичном представлении
+        // РџСЂРµРѕР±СЂР°Р·СѓРµРј СЂРµР·СѓР»СЊС‚Р°С‚ РѕР±СЂР°С‚РЅРѕ РІ СЃС‚СЂРѕРєСѓ РІ РґРІРѕРёС‡РЅРѕРј РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРё
         std::string resultStr = result.to_string();
 
-        // Удаляем ведущие нули
+        // РЈРґР°Р»СЏРµРј РІРµРґСѓС‰РёРµ РЅСѓР»Рё
         resultStr.erase(0, resultStr.find('1'));
 
         return resultStr;
     }
 
 
-    // Вспомогательная функция для выполнения вычитания двоичных чисел
+    // Р’СЃРїРѕРјРѕРіР°С‚РµР»СЊРЅР°СЏ С„СѓРЅРєС†РёСЏ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РІС‹С‡РёС‚Р°РЅРёСЏ РґРІРѕРёС‡РЅС‹С… С‡РёСЃРµР»
     B subtractBinary(const B& a, const B& b) const {
-        // Инвертируем все биты числа B (обратный код)
+        // РРЅРІРµСЂС‚РёСЂСѓРµРј РІСЃРµ Р±РёС‚С‹ С‡РёСЃР»Р° B (РѕР±СЂР°С‚РЅС‹Р№ РєРѕРґ)
         B negB = b;
         for (char& bit : negB) {
             bit = (bit == '0') ? '1' : '0';
         }
 
-        // Добавляем единицу к обратному коду для выполнения операции сложения
+        // Р”РѕР±Р°РІР»СЏРµРј РµРґРёРЅРёС†Сѓ Рє РѕР±СЂР°С‚РЅРѕРјСѓ РєРѕРґСѓ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё СЃР»РѕР¶РµРЅРёСЏ
         int carry = 1;
         for (int i = negB.size() - 1; i >= 0; i--) {
             int sum = (negB[i] - '0') + carry;
@@ -128,10 +128,10 @@ private:
             carry = sum / 2;
         }
 
-        // Выполняем операцию сложения A + (-B)
+        // Р’С‹РїРѕР»РЅСЏРµРј РѕРїРµСЂР°С†РёСЋ СЃР»РѕР¶РµРЅРёСЏ A + (-B)
         B result = addBinary(a, negB);
 
-        // Если результат превышает размер строки, удаляем старший разряд
+        // Р•СЃР»Рё СЂРµР·СѓР»СЊС‚Р°С‚ РїСЂРµРІС‹С€Р°РµС‚ СЂР°Р·РјРµСЂ СЃС‚СЂРѕРєРё, СѓРґР°Р»СЏРµРј СЃС‚Р°СЂС€РёР№ СЂР°Р·СЂСЏРґ
         if (result.size() > a.size()) {
             result.erase(0, 1);
         }
@@ -143,10 +143,10 @@ private:
 int main() {
     setlocale(LC_ALL, "RU");
     ones_compl_int<std::string> num1, num2;
-    std::cout << "Введите первое число в двоичном виде: ";
+    std::cout << "Р’РІРµРґРёС‚Рµ РїРµСЂРІРѕРµ С‡РёСЃР»Рѕ РІ РґРІРѕРёС‡РЅРѕРј РІРёРґРµ: ";
     std::cin >> num1;
 
-    std::cout << "Введите второе число в двоичном виде: ";
+    std::cout << "Р’РІРµРґРёС‚Рµ РІС‚РѕСЂРѕРµ С‡РёСЃР»Рѕ РІ РґРІРѕРёС‡РЅРѕРј РІРёРґРµ: ";
     std::cin >> num2;
 
     ones_compl_int<std::string> sum = num1 + num2;
@@ -154,10 +154,10 @@ int main() {
     ones_compl_int<std::string> product = num1 * num2;
     ones_compl_int<std::string> quotient = num1 / num2;
 
-    std::cout << "Сумма: " << sum << std::endl;
-    std::cout << "Разность: " << diff << std::endl;
-    std::cout << "Произведение: " << product << std::endl;
-    std::cout << "Частное: " << quotient << std::endl;
+    std::cout << "РЎСѓРјРјР°: " << sum << std::endl;
+    std::cout << "Р Р°Р·РЅРѕСЃС‚СЊ: " << diff << std::endl;
+    std::cout << "РџСЂРѕРёР·РІРµРґРµРЅРёРµ: " << product << std::endl;
+    std::cout << "Р§Р°СЃС‚РЅРѕРµ: " << quotient << std::endl;
 
     return 0;
 }
